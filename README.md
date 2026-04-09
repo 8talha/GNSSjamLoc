@@ -10,7 +10,7 @@ field measurement associated with spatial coordinates and
 distributed over an observation area, GNSSjamLoc can locate the
 source of interference, even in complex propagation scenarios (e.g. urban).
 It is based on a path loss physics-based model augmented with 
-a data-driven component, i.e. a Neural Netrwork.
+a data-driven component, i.e. a Neural Network.
 Additional information can be found at https://doi.org/10.48550/arXiv.2212.08097
 
 This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ field measurement associated with spatial coordinates and
 distributed over an observation area, GNSSjamLoc can locate the
 source of interference, even in complex propagation scenarios (e.g. urban).
 It is based on a path loss physics-based model augmented with 
-a data-driven component, i.e. a Neural Netrwork.
+a data-driven component, i.e. a Neural Network.
 Additional information can be found at https://doi.org/10.48550/arXiv.2212.08097
 
 ---
@@ -132,7 +132,8 @@ y_predicted(x) = f_physics(x; θ) + f_NN(x; w)
    - Both `θ` and `P₀` are **learnable parameters**, so the physics model directly yields the estimated jammer location after training.
 
 2. **Neural Network correction — `Net`**:
-   - A fully connected feedforward network (default architecture: `[200 → 100 → 1]` with `tanh` activations).
+   - A fully connected feedforward network (default architecture: `[2 input → 200 → 100 → 1 output]`).  
+     `tanh` activations are applied after every hidden layer; the final output layer is linear (no activation), as is standard for regression.
    - Takes the same 2D spatial coordinates `x` as input.
    - Learns the **residual** between the true power field and the physics model prediction — capturing complex propagation effects (reflections, shadowing) that the path-loss formula cannot model.
    - An L2 regularisation term keeps the NN correction small, letting the physics model dominate when it is accurate.
